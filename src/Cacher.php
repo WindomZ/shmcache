@@ -34,35 +34,34 @@ class Cacher extends shmop
 
     /**
      * @param string $key
-     * @param mixed $data
+     * @param mixed $value
      * @return bool
      * @throws \ErrorException
      */
-    public function save(string $key, $data): bool
+    public function save(string $key, $value): bool
     {
         if (empty($key)) {
             throw  new \ErrorException('"key" should not be empty!');
         }
 
-        $value = $this->read();
-        if (!is_array($value)) {
-            $value = array();
+        $data = $this->read();
+        if (!is_array($data)) {
+            $data = array();
         }
 
-        $value[$key] = $data;
+        $data[$key] = $value;
 
-        return parent::write($value, $this->timeout);
+        return parent::write($data, $this->timeout);
     }
 
     /**
      * @param string $key
      * @return bool|mixed
-     * @throws \ErrorException
      */
     public function get(string $key)
     {
         if (empty($key)) {
-            throw new \ErrorException('"key" should not be empty!');
+            return false;
         }
 
         $value = $this->read();
@@ -71,5 +70,13 @@ class Cacher extends shmop
         }
 
         return $value[$key];
+    }
+
+    /**
+     * Clean all cache data
+     */
+    public function clean()
+    {
+        parent::clean();
     }
 }

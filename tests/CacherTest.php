@@ -53,6 +53,7 @@ class CacherTest extends TestCase
         self::assertEquals($cache->get($key2), $data2);
 
         sleep(1);
+
         self::assertFalse($cache->get($key1));
         self::assertFalse($cache->get($key2));
     }

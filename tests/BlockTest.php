@@ -3,16 +3,16 @@
 namespace SHMCache\Test;
 
 use PHPUnit\Framework\TestCase;
-use SHMCache\Cacher;
+use SHMCache\Block;
 
-class CacherTest extends TestCase
+class BlockTest extends TestCase
 {
     public function test_save_get()
     {
         $key1 = 'say';
         $data1 = 'hello world';
 
-        $cache = new Cacher();
+        $cache = new Block();
         try {
             self::assertFalse($cache->save('', $data1));
         } catch (\ErrorException $err) {
@@ -35,7 +35,7 @@ class CacherTest extends TestCase
         $key1 = 'say';
         $data1 = 'hello world';
 
-        $cache = new Cacher(1);
+        $cache = new Block(1);
         try {
             self::assertFalse($cache->save('', $data1));
         } catch (\ErrorException $err) {

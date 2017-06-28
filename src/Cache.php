@@ -6,7 +6,7 @@ namespace SHMCache;
  * Class Cache
  * @package SHMCache
  */
-class Cache extends Cacher
+class Cache extends Block
 {
     /**
      * @var Cache

@@ -3,10 +3,10 @@
 namespace SHMCache;
 
 /**
- * Class Cacher
+ * Class Block
  * @package SHMCache
  */
-class Cacher extends shmop
+class Block extends shmop
 {
     /**
      * @var int
@@ -22,7 +22,7 @@ class Cacher extends shmop
     }
 
     /**
-     * Cacher constructor.
+     * Block constructor.
      * @param int [$timeout]
      * @param int [$id]
      */

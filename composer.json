@@ -1,6 +1,6 @@
 {
     "name": "windomz/shmcache",
-    "description": "",
+    "description": "A lightweight, abstract, scalable, out-of-the-box shared memory operation, makes use of the PHP Shared Memory Functions(shmop).",
     "type": "library",
     "require": {
         "php": ">=5.3"

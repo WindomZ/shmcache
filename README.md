@@ -1,12 +1,16 @@
 # shmcache
 
-> A lightweight, abstract, scalable, out-of-the-box shared memory operation, makes use of the PHP Shared Memory Functions(shmop).
+> A lightweight, abstract, scalable, out-of-the-box shared memory operation, makes use of the PHP Shared Memory Functions([shmop](https://secure.php.net/manual/en/ref.shmop.php)).
+
+[![Latest Stable Version](https://img.shields.io/packagist/v/windomz/shmcache.svg?style=flat-square)](https://packagist.org/packages/windomz/shmcache)
+[![Build Status](https://img.shields.io/travis/WindomZ/shmcache/master.svg?style=flat-square)](https://travis-ci.org/WindomZ/shmcache)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.3-8892BF.svg?style=flat-square)](https://php.net/)
 
 ## Features
 
-- [x] Class [shmop](https://github.com/WindomZ/shmcache/blob/master/src/shmop.php) - _Abstract_ and _scalable_ use of the [shmop](https://secure.php.net/manual/en/ref.shmop.php).
+- [x] Class [shmop](https://github.com/WindomZ/shmcache/blob/master/src/shmop.php) - _Abstract_ and _scalable_ make use of the [shmop](https://secure.php.net/manual/en/ref.shmop.php).
 - [x] Class [Block](https://github.com/WindomZ/shmcache/blob/master/src/Block.php) - **Key-value** pairs and **timeout** implement
-- [x] Class [Cache](https://github.com/WindomZ/shmcache/blob/master/src/Cache.php) - Base on Block, _Lightweight_ and _Out-of-the-box_
+- [x] Class [Cache](https://github.com/WindomZ/shmcache/blob/master/src/Cache.php) - Extends `Block`, _lightweight_ and _Out-of-the-box_
 
 ## Usage
 

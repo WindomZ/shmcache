@@ -9,52 +9,69 @@ class BlockTest extends TestCase
 {
     public function test_save_get()
     {
-        $key1 = 'say';
-        $data1 = 'hello world';
-
         $cache = new Block();
         try {
-            self::assertFalse($cache->save('', $data1));
+            self::assertFalse($cache->save('', 'hello world'));
         } catch (\ErrorException $err) {
             self::assertNotEmpty($err);
         }
 
-        self::assertTrue($cache->save($key1, $data1));
-        self::assertEquals($cache->get($key1), $data1);
+        for ($i = 0; $i < 1000; $i++) {
+            self::assertTrue($cache->save("say$i", "hello world$i"));
+        }
 
-        $key2 = 'try';
-        $data2 = 'catch';
-
-        self::assertTrue($cache->save($key2, $data2));
-        self::assertEquals($cache->get($key1), $data1);
-        self::assertEquals($cache->get($key2), $data2);
+        for ($i = 0; $i < 1000; $i++) {
+            self::assertEquals($cache->get("say$i"), "hello world$i");
+        }
     }
 
-    public function test_timeout()
+    public function test_clean()
     {
-        $key1 = 'say';
-        $data1 = 'hello world';
+        $cache = new Block();
+        $cache->clean();
 
+        for ($i = 0; $i < 1000; $i++) {
+            self::assertFalse($cache->get("say$i"));
+        }
+    }
+
+    public function test_timeout_1()
+    {
         $cache = new Block(1);
-        try {
-            self::assertFalse($cache->save('', $data1));
-        } catch (\ErrorException $err) {
-            self::assertNotEmpty($err);
+        $cache->clean();
+
+        for ($i = 0; $i < 1000; $i++) {
+            self::assertTrue($cache->save("say$i", "hello world$i"));
         }
 
-        self::assertTrue($cache->save($key1, $data1));
-        self::assertEquals($cache->get($key1), $data1);
+        for ($i = 0; $i < 1000; $i++) {
+            self::assertEquals($cache->get("say$i"), "hello world$i");
+        }
 
-        $key2 = 'try';
-        $data2 = 'catch';
+        sleep(1); // sleep 1 second for waiting timeout
 
-        self::assertTrue($cache->save($key2, $data2));
-        self::assertEquals($cache->get($key1), $data1);
-        self::assertEquals($cache->get($key2), $data2);
+        for ($i = 0; $i < 1000; $i++) {
+            self::assertFalse($cache->get("say$i"));
+        }
+    }
 
-        sleep(1);
+    public function test_timeout_2()
+    {
+        $cache = new Block();
+        $cache->clean();
 
-        self::assertFalse($cache->get($key1));
-        self::assertFalse($cache->get($key2));
+        for ($i = 0; $i < 1000; $i++) {
+            self::assertTrue($cache->save("say$i", "hello world$i", 1));
+        }
+
+        for ($i = 0; $i < 1000; $i++) {
+            self::assertEquals($cache->get("say$i"), "hello world$i");
+        }
+
+        sleep(1); // sleep 1 second for waiting timeout
+
+        for ($i = 0; $i < 1000; $i++) {
+            self::assertFalse($cache->get("say$i"));
+        }
     }
 }

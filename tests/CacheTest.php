@@ -9,23 +9,48 @@ class CacheTest extends TestCase
 {
     public function test_save_get()
     {
-        $key1 = 'say';
-        $data1 = 'hello world';
+        Cache::cleanCache();
 
         try {
-            self::assertFalse(Cache::saveCache('', $data1));
+            self::assertFalse(Cache::saveCache('', 'hello world'));
         } catch (\ErrorException $err) {
             self::assertNotEmpty($err);
         }
 
-        self::assertTrue(Cache::saveCache($key1, $data1));
-        self::assertEquals(Cache::getCache($key1), $data1);
+        for ($i = 0; $i < 1000; $i++) {
+            self::assertTrue(Cache::saveCache("say$i", "hello world$i"));
+        }
 
-        $key2 = 'try';
-        $data2 = 'catch';
+        for ($i = 0; $i < 1000; $i++) {
+            self::assertEquals(Cache::getCache("say$i"), "hello world$i");
+        }
+    }
 
-        self::assertTrue(Cache::saveCache($key2, $data2));
-        self::assertEquals(Cache::getCache($key1), $data1);
-        self::assertEquals(Cache::getCache($key2), $data2);
+    public function test_clean()
+    {
+        Cache::cleanCache();
+
+        for ($i = 0; $i < 1000; $i++) {
+            self::assertFalse(Cache::getCache("say$i"));
+        }
+    }
+
+    public function test_timeout()
+    {
+        Cache::cleanCache();
+
+        for ($i = 0; $i < 1000; $i++) {
+            self::assertTrue(Cache::saveCache("say$i", "hello world$i", 1));
+        }
+
+        for ($i = 0; $i < 1000; $i++) {
+            self::assertEquals(Cache::getCache("say$i"), "hello world$i");
+        }
+
+        sleep(1); // sleep 1 second for waiting timeout
+
+        for ($i = 0; $i < 1000; $i++) {
+            self::assertFalse(Cache::getCache("say$i"));
+        }
     }
 }

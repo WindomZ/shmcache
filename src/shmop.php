@@ -68,20 +68,34 @@ abstract class shmop
     }
 
     /**
+     * Hook to package the mixed data
+     * @param mixed $data
+     * @return mixed
+     */
+    abstract protected function toPack($data);
+
+    /**
      * Package to an array and serialize to a string
      * @param mixed $data
-     * @param int $timeout
+     * @param int $timeout [optional] seconds
      * @return string
      */
     protected function pack($data, $timeout = 0)
     {
         return serialize(
             array(
-                'data' => $data,
+                'data' => $this->toPack($data),
                 'timeout' => $timeout > 0 ? time() + $timeout : 0,
             )
         );
     }
+
+    /**
+     * Hook to unpacking the mixed data
+     * @param mixed $data
+     * @return mixed
+     */
+    abstract protected function toUnpack($data);
 
     /**
      * Unpacking a string and parse no timeout data from array
@@ -92,10 +106,10 @@ abstract class shmop
     {
         if ($data) {
             $data = unserialize($data);
-            if (is_array($data) && isset($data['timeout'])) {
+            if (is_array($data) && isset($data['data']) && isset($data['timeout'])) {
                 $timeout = intval($data['timeout']);
-                if (isset($data['data']) && ($timeout === 0 || time() < $timeout)) {
-                    return $data['data'];
+                if ($timeout === 0 || time() < $timeout) {
+                    return $this->toUnpack($data['data']);
                 }
             }
         }
@@ -106,7 +120,7 @@ abstract class shmop
     /**
      * Write data into shared memory block
      * @param mixed $data
-     * @param int $timeout [optional]
+     * @param int $timeout [optional] seconds
      * @return bool
      */
     protected function write($data, $timeout = 0)

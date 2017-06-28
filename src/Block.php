@@ -10,12 +10,13 @@ namespace SHMCache;
 class Block extends shmop
 {
     /**
+     * timeout seconds
      * @var int
      */
     protected $timeout = 0;
 
     /**
-     * Get timeout var
+     * Get timeout seconds
      * @return int
      */
     public function getTimeout()
@@ -25,7 +26,7 @@ class Block extends shmop
 
     /**
      * Block constructor.
-     * @param int $timeout [optional]
+     * @param int $timeout [optional] seconds
      * @param int $id [optional]
      */
     public function __construct($timeout = 0, $id = 0)
@@ -35,13 +36,34 @@ class Block extends shmop
     }
 
     /**
+     * Hook to package the mixed data
+     * @param mixed $data
+     * @return mixed
+     */
+    protected function toPack($data)
+    {
+        return $data;
+    }
+
+    /**
+     * Hook to unpacking the mixed data
+     * @param mixed $data
+     * @return mixed
+     */
+    protected function toUnpack($data)
+    {
+        return $data;
+    }
+
+    /**
      * Save $value by $key to cache
      * @param string $key
      * @param mixed $value
+     * @param int $timeout seconds
      * @return bool
      * @throws \ErrorException
      */
-    public function save($key, $value)
+    public function save($key, $value, $timeout = 0)
     {
         if (empty($key)) {
             throw  new \ErrorException('"key" should not be empty!');
@@ -54,7 +76,7 @@ class Block extends shmop
 
         $data[$key] = $value;
 
-        return parent::write($data, $this->timeout);
+        return parent::write($data, $timeout ? $timeout : $this->timeout);
     }
 
     /**

@@ -1,0 +1,16 @@
+# Composer
+composer.phar
+/vendor/
+composer.lock
+.php_cs.cache
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+
+# Development
+*.sh
+*.zip
+*.tar

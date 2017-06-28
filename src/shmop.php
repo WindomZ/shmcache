@@ -21,7 +21,7 @@ abstract class shmop
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -29,7 +29,7 @@ abstract class shmop
     /**
      * @return int
      */
-    public function getMode(): int
+    public function getMode()
     {
         return $this->mode;
     }
@@ -37,7 +37,7 @@ abstract class shmop
     /**
      * @param int $mode
      */
-    public function setMode(int $mode)
+    public function setMode($mode)
     {
         $this->mode = $mode;
     }
@@ -46,7 +46,7 @@ abstract class shmop
      * shmop constructor.
      * @param int [$id]
      */
-    public function __construct(int $id = 0)
+    public function __construct($id = 0)
     {
         if (empty($id)) {
             $id = ftok(__FILE__, "b");
@@ -58,7 +58,7 @@ abstract class shmop
      * @param int [$id]
      * @return bool
      */
-    protected function exists(int $id = 0): bool
+    protected function exists($id = 0)
     {
         return (bool)@shmop_open($id ? $id : $this->id, 'a', 0, 0);
     }
@@ -68,7 +68,7 @@ abstract class shmop
      * @param int $timeout
      * @return string
      */
-    protected function pack($data, int $timeout = 0)
+    protected function pack($data, $timeout = 0)
     {
         return serialize(
             array(
@@ -82,7 +82,7 @@ abstract class shmop
      * @param string $data
      * @return mixed|bool
      */
-    protected function unpack(string $data)
+    protected function unpack($data)
     {
         if ($data) {
             $data = unserialize($data);
@@ -102,7 +102,7 @@ abstract class shmop
      * @param int [$timeout]
      * @return bool
      */
-    protected function write($data, int $timeout = 0): bool
+    protected function write($data, $timeout = 0)
     {
         if (!$data) {
             return false;
@@ -117,7 +117,9 @@ abstract class shmop
             return false;
         }
 
-        return !empty(shmop_write($id, $data, 0));
+        $size = shmop_write($id, $data, 0);
+
+        return !empty($size);
     }
 
     /**

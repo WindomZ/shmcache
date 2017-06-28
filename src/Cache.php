@@ -20,7 +20,7 @@ class Cache extends Cacher
     /**
      * @return Cache
      */
-    private static function getInstance(): Cache
+    private static function getInstance()
     {
         if (!(self::$_instance instanceof self)) {
             self::$_instance = new Cache();
@@ -33,7 +33,7 @@ class Cache extends Cacher
      * Cache constructor.
      * @param int [$timeout]
      */
-    public function __construct(int $timeout = 0)
+    public function __construct($timeout = 0)
     {
         parent::__construct($timeout);
     }
@@ -44,7 +44,7 @@ class Cache extends Cacher
      * @return bool
      * @throws \ErrorException
      */
-    public static function saveCache(string $key, $value): bool
+    public static function saveCache($key, $value)
     {
         return self::getInstance()->save($key, $value);
     }
@@ -53,7 +53,7 @@ class Cache extends Cacher
      * @param string $key
      * @return bool|mixed
      */
-    public static function getCache(string $key)
+    public static function getCache($key)
     {
         return self::getInstance()->get($key);
     }

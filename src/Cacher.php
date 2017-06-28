@@ -16,7 +16,7 @@ class Cacher extends shmop
     /**
      * @return int
      */
-    public function getTimeout(): int
+    public function getTimeout()
     {
         return $this->timeout;
     }
@@ -26,7 +26,7 @@ class Cacher extends shmop
      * @param int [$timeout]
      * @param int [$id]
      */
-    public function __construct(int $timeout = 0, int $id = 0)
+    public function __construct($timeout = 0, $id = 0)
     {
         $this->timeout = $timeout;
         parent::__construct($id > 0 ? $id : 0);
@@ -38,7 +38,7 @@ class Cacher extends shmop
      * @return bool
      * @throws \ErrorException
      */
-    public function save(string $key, $value): bool
+    public function save($key, $value)
     {
         if (empty($key)) {
             throw  new \ErrorException('"key" should not be empty!');
@@ -58,7 +58,7 @@ class Cacher extends shmop
      * @param string $key
      * @return bool|mixed
      */
-    public function get(string $key)
+    public function get($key)
     {
         if (empty($key)) {
             return false;

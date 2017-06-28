@@ -11,6 +11,14 @@
 - [x] Class [shmop](https://github.com/WindomZ/shmcache/blob/master/src/shmop.php) - _Abstract_ and _scalable_ make use of the [shmop](https://secure.php.net/manual/en/ref.shmop.php).
 - [x] Class [Block](https://github.com/WindomZ/shmcache/blob/master/src/Block.php) - **Key-value** pairs and **timeout** implement
 - [x] Class [Cache](https://github.com/WindomZ/shmcache/blob/master/src/Cache.php) - Extends `Block`, _lightweight_ and _Out-of-the-box_
+- [x] Pure and not dependent, except for dev mode tests
+
+## Install
+
+Open the terminal in the project directory:
+```bash
+$ composer require windomz/shmcache
+```
 
 ## Usage
 

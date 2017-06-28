@@ -3,6 +3,7 @@
 namespace SHMCache;
 
 /**
+ * Shared Memory Block
  * Class Block
  * @package SHMCache
  */
@@ -14,6 +15,7 @@ class Block extends shmop
     protected $timeout = 0;
 
     /**
+     * Get timeout var
      * @return int
      */
     public function getTimeout()
@@ -23,8 +25,8 @@ class Block extends shmop
 
     /**
      * Block constructor.
-     * @param int [$timeout]
-     * @param int [$id]
+     * @param int $timeout [optional]
+     * @param int $id [optional]
      */
     public function __construct($timeout = 0, $id = 0)
     {
@@ -33,6 +35,7 @@ class Block extends shmop
     }
 
     /**
+     * Save $value by $key to cache
      * @param string $key
      * @param mixed $value
      * @return bool
@@ -55,6 +58,7 @@ class Block extends shmop
     }
 
     /**
+     * Get the $value by $key from cache
      * @param string $key
      * @return bool|mixed
      */

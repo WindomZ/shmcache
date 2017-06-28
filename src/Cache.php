@@ -3,6 +3,7 @@
 namespace SHMCache;
 
 /**
+ * A lightweight, out-of-the-box shared memory operation
  * Class Cache
  * @package SHMCache
  */
@@ -18,6 +19,7 @@ class Cache extends Block
     }
 
     /**
+     * Single instance
      * @return Cache
      */
     private static function getInstance()
@@ -31,7 +33,7 @@ class Cache extends Block
 
     /**
      * Cache constructor.
-     * @param int [$timeout]
+     * @param int $timeout [optional]
      */
     public function __construct($timeout = 0)
     {
@@ -39,6 +41,7 @@ class Cache extends Block
     }
 
     /**
+     * Save $value by $key to cache
      * @param string $key
      * @param mixed $value
      * @return bool
@@ -50,6 +53,7 @@ class Cache extends Block
     }
 
     /**
+     * Get the $value by $key from cache
      * @param string $key
      * @return bool|mixed
      */

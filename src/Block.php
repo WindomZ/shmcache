@@ -63,7 +63,7 @@ class Block extends shmop
      * @return bool
      * @throws \ErrorException
      */
-    public function save($key, $value, $timeout = 0)
+    public function save($key, $value, int $timeout = 0)
     {
         if (empty($key)) {
             throw  new \ErrorException('"key" should not be empty!');

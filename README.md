@@ -4,7 +4,7 @@
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/windomz/shmcache.svg?style=flat-square)](https://packagist.org/packages/windomz/shmcache)
 [![Build Status](https://img.shields.io/travis/WindomZ/shmcache/master.svg?style=flat-square)](https://travis-ci.org/WindomZ/shmcache)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.3-8892BF.svg?style=flat-square)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.0-8892BF.svg?style=flat-square)](https://php.net/)
 
 ## Features
 

@@ -5,8 +5,15 @@ namespace SHMCache\Test;
 use PHPUnit\Framework\TestCase;
 use SHMCache\Cache;
 
+/**
+ * Class CacheTest
+ * @package SHMCache\Test
+ */
 class CacheTest extends TestCase
 {
+    /**
+     * Base Cache testing
+     */
     public function test_save_get()
     {
         Cache::cleanCache();
@@ -26,6 +33,9 @@ class CacheTest extends TestCase
         }
     }
 
+    /**
+     * @depends test_save_get
+     */
     public function test_clean()
     {
         Cache::cleanCache();
@@ -35,10 +45,11 @@ class CacheTest extends TestCase
         }
     }
 
+    /**
+     * @depends test_clean
+     */
     public function test_timeout()
     {
-        Cache::cleanCache();
-
         for ($i = 0; $i < 1000; $i++) {
             self::assertTrue(Cache::saveCache("say$i", "hello world$i", 1));
         }

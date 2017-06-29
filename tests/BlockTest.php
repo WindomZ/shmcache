@@ -5,8 +5,15 @@ namespace SHMCache\Test;
 use PHPUnit\Framework\TestCase;
 use SHMCache\Block;
 
+/**
+ * Class BlockTest
+ * @package SHMCache\Test
+ */
 class BlockTest extends TestCase
 {
+    /**
+     * Base Block testing
+     */
     public function test_save_get()
     {
         $cache = new Block();
@@ -25,6 +32,9 @@ class BlockTest extends TestCase
         }
     }
 
+    /**
+     * @depends test_save_get
+     */
     public function test_clean()
     {
         $cache = new Block();
@@ -35,10 +45,12 @@ class BlockTest extends TestCase
         }
     }
 
+    /**
+     * @depends test_clean
+     */
     public function test_timeout_1()
     {
         $cache = new Block(1);
-        $cache->clean();
 
         for ($i = 0; $i < 1000; $i++) {
             self::assertTrue($cache->save("say$i", "hello world$i"));
@@ -55,10 +67,12 @@ class BlockTest extends TestCase
         }
     }
 
+    /**
+     * @depends test_timeout_1
+     */
     public function test_timeout_2()
     {
         $cache = new Block();
-        $cache->clean();
 
         for ($i = 0; $i < 1000; $i++) {
             self::assertTrue($cache->save("say$i", "hello world$i", 1));

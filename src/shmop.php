@@ -68,6 +68,16 @@ abstract class shmop
     }
 
     /**
+     * Get the microsecond from microtime() and offset $microseconds
+     * @param int $microseconds [optional]
+     * @return int
+     */
+    public function microtime(int $microseconds = 0): int
+    {
+        return intval(round(microtime(true) * 1000)) + $microseconds;
+    }
+
+    /**
      * Hook to package the mixed data
      * @param mixed $data
      * @return mixed
@@ -80,12 +90,12 @@ abstract class shmop
      * @param int $timeout [optional] seconds
      * @return string
      */
-    protected function pack($data, $timeout = 0)
+    protected function pack($data, int $timeout = 0)
     {
         return serialize(
             array(
                 'data' => $this->toPack($data),
-                'timeout' => $timeout > 0 ? time() + $timeout : 0,
+                'timeout' => $timeout ? $this->microtime($timeout * 1000) : 0,
             )
         );
     }
@@ -108,7 +118,7 @@ abstract class shmop
             $data = unserialize($data);
             if (is_array($data) && isset($data['data']) && isset($data['timeout'])) {
                 $timeout = intval($data['timeout']);
-                if ($timeout === 0 || time() < $timeout) {
+                if (!$timeout || $timeout >= $this->microtime()) {
                     return $this->toUnpack($data['data']);
                 }
             }
@@ -133,7 +143,7 @@ abstract class shmop
 
         $data = $this->pack($data, $timeout);
 
-        $id = shmop_open($this->id, "c", $this->mode, strlen($data));
+        $id = shmop_open($this->id, "n", $this->mode, strlen($data));
         if (!$id) {
             return false;
         }

@@ -10,6 +10,21 @@ namespace SHMCache;
 class Block extends shmop
 {
     /**
+     * Enable read & write
+     * @var bool
+     */
+    protected $enable = true;
+
+    /**
+     * Is enable read & write
+     * @return bool
+     */
+    public function isEnable(): bool
+    {
+        return $this->enable;
+    }
+
+    /**
      * timeout seconds
      * @var int
      */
@@ -67,6 +82,8 @@ class Block extends shmop
     {
         if (empty($key)) {
             throw  new \ErrorException('"key" should not be empty!');
+        } elseif (!$this->isEnable()) {
+            return false;
         }
 
         $data = $this->read();
@@ -86,7 +103,7 @@ class Block extends shmop
      */
     public function get(string $key)
     {
-        if (empty($key)) {
+        if (empty($key) || !$this->isEnable()) {
             return false;
         }
 
@@ -104,5 +121,21 @@ class Block extends shmop
     public function clean()
     {
         parent::clean();
+    }
+
+    /**
+     * Open to enable read & write
+     */
+    public function open()
+    {
+        $this->enable = true;
+    }
+
+    /**
+     * Close to disable read and write
+     */
+    public function close()
+    {
+        $this->enable = false;
     }
 }

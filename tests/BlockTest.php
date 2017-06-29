@@ -88,4 +88,28 @@ class BlockTest extends TestCase
             self::assertFalse($cache->get("say$i"));
         }
     }
+
+    /**
+     * @depends test_timeout_2
+     */
+    public function test_open_close()
+    {
+        $cache = new Block();
+
+        for ($i = 0; $i < 10; $i++) {
+            self::assertTrue($cache->save("say$i", "hello world$i"));
+        }
+        for ($i = 0; $i < 10; $i++) {
+            self::assertEquals($cache->get("say$i"), "hello world$i");
+        }
+
+        $cache->close();
+
+        for ($i = 0; $i < 10; $i++) {
+            self::assertFalse($cache->save("say$i", "hello world$i"));
+        }
+        for ($i = 0; $i < 10; $i++) {
+            self::assertFalse($cache->get("say$i"));
+        }
+    }
 }

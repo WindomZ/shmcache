@@ -51,7 +51,7 @@ class CacheTest extends TestCase
     public function test_timeout()
     {
         for ($i = 0; $i < 1000; $i++) {
-            self::assertTrue(Cache::saveCache("say$i", "hello world$i", 1));
+            self::assertTrue(Cache::saveCache("say$i", "hello world$i", 1)); // 1 second timeout
         }
 
         for ($i = 0; $i < 1000; $i++) {

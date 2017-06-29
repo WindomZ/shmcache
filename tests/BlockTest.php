@@ -50,7 +50,7 @@ class BlockTest extends TestCase
      */
     public function test_timeout_1()
     {
-        $cache = new Block(1);
+        $cache = new Block(1); // 1 second timeout
 
         for ($i = 0; $i < 1000; $i++) {
             self::assertTrue($cache->save("say$i", "hello world$i"));
@@ -75,7 +75,7 @@ class BlockTest extends TestCase
         $cache = new Block();
 
         for ($i = 0; $i < 1000; $i++) {
-            self::assertTrue($cache->save("say$i", "hello world$i", 1));
+            self::assertTrue($cache->save("say$i", "hello world$i", 1)); // 1 second timeout
         }
 
         for ($i = 0; $i < 1000; $i++) {

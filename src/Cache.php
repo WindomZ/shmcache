@@ -35,7 +35,7 @@ class Cache extends Block
      * Cache constructor.
      * @param int $timeout [optional] seconds
      */
-    public function __construct($timeout = 0)
+    public function __construct(int $timeout = 0)
     {
         parent::__construct($timeout);
     }
@@ -44,12 +44,12 @@ class Cache extends Block
      * Save $value by $key to cache
      * @param string $key
      * @param mixed $value
-     * @param int $timeout [optional] seconds
+     * @param int $seconds [optional]
      * @return bool
      */
-    public static function saveCache($key, $value, $timeout = 0)
+    public static function saveCache(string $key, $value, int $seconds = 0): bool
     {
-        return self::getInstance()->save($key, $value, $timeout);
+        return self::getInstance()->save($key, $value, $seconds);
     }
 
     /**
@@ -57,7 +57,7 @@ class Cache extends Block
      * @param string $key
      * @return bool|mixed
      */
-    public static function getCache($key)
+    public static function getCache(string $key)
     {
         return self::getInstance()->get($key);
     }

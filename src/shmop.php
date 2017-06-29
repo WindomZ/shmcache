@@ -46,7 +46,7 @@ abstract class shmop
      * @param int $id [optional]
      * @param int $mode [optional]
      */
-    public function __construct($id = 0, $mode = 0)
+    public function __construct(int $id = 0, int $mode = 0)
     {
         if (empty($id)) {
             $id = ftok(__FILE__, "b");
@@ -62,7 +62,7 @@ abstract class shmop
      * @param int $id [optional]
      * @return bool
      */
-    protected function exists($id = 0)
+    protected function exists(int $id = 0): bool
     {
         return (bool)@shmop_open($id ? $id : $this->id, 'a', 0, 0);
     }
@@ -87,15 +87,15 @@ abstract class shmop
     /**
      * Package to an array and serialize to a string
      * @param mixed $data
-     * @param int $timeout [optional] seconds
+     * @param int $seconds [optional]
      * @return string
      */
-    protected function pack($data, int $timeout = 0)
+    protected function pack($data, int $seconds = 0): string
     {
         return serialize(
             array(
                 'data' => $this->toPack($data),
-                'timeout' => $timeout ? $this->microtime($timeout * 1000) : 0,
+                'timeout' => $seconds ? $this->microtime($seconds * 1000) : 0,
             )
         );
     }
@@ -112,7 +112,7 @@ abstract class shmop
      * @param string $data
      * @return mixed|bool
      */
-    protected function unpack($data)
+    protected function unpack(string $data)
     {
         if ($data) {
             $data = unserialize($data);
@@ -130,10 +130,10 @@ abstract class shmop
     /**
      * Write data into shared memory block
      * @param mixed $data
-     * @param int $timeout [optional] seconds
+     * @param int $seconds [optional]
      * @return bool
      */
-    protected function write($data, $timeout = 0)
+    protected function write($data, int $seconds = 0): bool
     {
         if (!$data) {
             return false;
@@ -141,7 +141,7 @@ abstract class shmop
 
         $this->clean();
 
-        $data = $this->pack($data, $timeout);
+        $data = $this->pack($data, $seconds);
 
         $id = shmop_open($this->id, "n", $this->mode, strlen($data));
         if (!$id) {

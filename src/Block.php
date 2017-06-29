@@ -19,7 +19,7 @@ class Block extends shmop
      * Get timeout seconds
      * @return int
      */
-    public function getTimeout()
+    public function getTimeout(): int
     {
         return $this->timeout;
     }
@@ -59,11 +59,11 @@ class Block extends shmop
      * Save $value by $key to cache
      * @param string $key
      * @param mixed $value
-     * @param int $timeout seconds
+     * @param int $seconds
      * @return bool
      * @throws \ErrorException
      */
-    public function save($key, $value, int $timeout = 0)
+    public function save(string $key, $value, int $seconds = 0): bool
     {
         if (empty($key)) {
             throw  new \ErrorException('"key" should not be empty!');
@@ -76,7 +76,7 @@ class Block extends shmop
 
         $data[$key] = $value;
 
-        return parent::write($data, $timeout ? $timeout : $this->timeout);
+        return parent::write($data, $seconds ? $seconds : $this->timeout);
     }
 
     /**
@@ -84,7 +84,7 @@ class Block extends shmop
      * @param string $key
      * @return bool|mixed
      */
-    public function get($key)
+    public function get(string $key)
     {
         if (empty($key)) {
             return false;
